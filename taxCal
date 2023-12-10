@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tax Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .calculator {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <h2 class="text-center mb-4">Tax Calculator</h2>
+
+  <form>
+    <div class="form-group">
+      <label for="annualSalary">Annual Salary (in INR):</label>
+      <input type="number" class="form-control" id="annualSalary" placeholder="Enter your annual salary" required>
+    </div>
+
+    <div class="form-group">
+      <label for="additionalSalary">Additional Salary (in INR):</label>
+      <input type="number" class="form-control" id="additionalSalary" placeholder="Enter additional annual salary">
+    </div>
+
+    <div class="form-group">
+      <label for="deductions">Tax Deductions (in INR):</label>
+      <input type="number" class="form-control" id="deductions" placeholder="Enter tax deductions">
+    </div>
+
+    <button type="button" class="btn btn-primary btn-block" onclick="calculateTax()">Calculate Tax</button>
+    
+    <button type="button" class="btn btn-success btn-block mt-3" onclick="calculateNetSalary()">Calculate Net Salary</button>
+  </form>
+
+  <div class="mt-4" id="result"></div>
+</div>
+
+<script>
+  function calculateTax() {
+    const annualSalary = parseFloat(document.getElementById('annualSalary').value);
+    const additionalSalary = parseFloat(document.getElementById('additionalSalary').value) || 0;
+    const deductions = parseFloat(document.getElementById('deductions').value) || 0;
+
+    const totalAnnualSalary = annualSalary + additionalSalary;
+    const taxableIncome = totalAnnualSalary - deductions;
+
+    let taxAmount = 0;
+
+    if (taxableIncome <= 300000) {
+      taxAmount = 0;
+    } else if (taxableIncome <= 600000) {
+      taxAmount = (taxableIncome - 300000) * 0.05;
+    } else if (taxableIncome <= 900000) {
+      taxAmount = (300000 * 0.05) + (taxableIncome - 600000) * 0.10;
+    } else if (taxableIncome <= 1200000) {
+      taxAmount = (300000 * 0.05) + (300000 * 0.10) + (taxableIncome - 900000) * 0.15;
+    } else if (taxableIncome <= 1500000) {
+      taxAmount = (300000 * 0.05) + (300000 * 0.10) + (300000 * 0.15) + (taxableIncome - 1200000) * 0.20;
+    } else {
+      taxAmount = (300000 * 0.05) + (300000 * 0.10) + (300000 * 0.15) + (300000 * 0.20) + (taxableIncome - 1500000) * 0.30;
+    }
+
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `<div class="alert alert-success">Your estimated tax: ${taxAmount.toFixed(2)} INR</div>`;
+  }
+
+  function calculateNetSalary() {
+    const annualSalary = parseFloat(document.getElementById('annualSalary').value);
+    const additionalSalary = parseFloat(document.getElementById('additionalSalary').value) || 0;
+    const deductions = parseFloat(document.getElementById('deductions').value) || 0;
+
+    const totalAnnualSalary = annualSalary + additionalSalary;
+    const taxableIncome = totalAnnualSalary - deductions;
+
+    let taxAmount = 0;
+
+    if (taxableIncome <= 300000) {
+      taxAmount = 0;
+    } else if (taxableIncome <= 600000) {
+      taxAmount = (taxableIncome - 300000) * 0.05;
+    } else if (taxableIncome <= 900000) {
+      taxAmount = (300000 * 0.05) + (taxableIncome - 600000) * 0.10;
+    } else if (taxableIncome <= 1200000) {
+      taxAmount = (300000 * 0.05) + (300000 * 0.10) + (taxableIncome - 900000) * 0.15;
+    } else if (taxableIncome <= 1500000) {
+      taxAmount = (300000 * 0.05) + (300000 * 0.10) + (300000 * 0.15) + (taxableIncome - 1200000) * 0.20;
+    } else {
+      taxAmount = (300000 * 0.05) + (300000 * 0.10) + (300000 * 0.15) + (300000 * 0.20) + (taxableIncome - 1500000) * 0.30;
+    }
+
+    const netSalary = totalAnnualSalary - taxAmount;
+
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `<div class="alert alert-success">
+      Your estimated tax: ${taxAmount.toFixed(2)} INR<br>
+      Your net annual salary: ${netSalary.toFixed(2)} INR<br>
+      Your net monthly salary: ${(netSalary / 12).toFixed(2)} INR
+    </div>`;
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
